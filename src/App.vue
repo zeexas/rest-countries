@@ -1,16 +1,19 @@
 <template>
   <div :class="theme">
     <the-header @toggle-theme="toggleTheme" :mode="theme"></the-header>
+    <home-page></home-page>
   </div>
 </template>
 
 <script lang="ts">
 // setup
 import TheHeader from './components/TheHeader.vue'
+import HomePage from './components/HomePage.vue'
 
 export default {
   components: {
-    TheHeader
+    TheHeader,
+    HomePage
   },
   data() {
     return {
@@ -31,7 +34,7 @@ export default {
   },
   computed: {
     theme() {
-      return this.reactive.isDark ? 'Dark' : 'Light'
+      return this.reactive.isDark ? 'dark' : ''
     }
   }
 }
@@ -46,7 +49,7 @@ body {
   /* font-size: 14px; */
   /* font-weight: 600; */
 }
-.Dark {
+.dark {
   color: white;
   background-color: hsl(207, 26%, 17%);
 }
@@ -65,5 +68,4 @@ body {
 .light-el {
   background-color: hsl(0, 0%, 100%);
 }
-
 </style>
