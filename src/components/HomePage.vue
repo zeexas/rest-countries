@@ -1,7 +1,7 @@
 <template>
   <section class="pt-28 px-16 pb-16">
     <div class="flex flex-wrap justify-between">
-      <div class="relative w-1/4 min-w-[280px] mr-4 mb-4">
+      <div class="relative w-1/4 min-w-[280px] mr-4">
         <div class="absolute left-4 top-[50%] -translate-y-1/2"><search-svg /></div>
         <input
           type="search"
@@ -13,7 +13,7 @@
       </div>
       <select
         v-model="regionSelected"
-        class="rounded px-4 py-2 outline-none"
+        class="rounded px-4 py-2 outline-none block"
         :class="applyTheme"
         name="selectRegion"
         id="selectRegion"
@@ -22,7 +22,10 @@
         <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
       </select>
     </div>
-    <ul class="flex flex-row flex-wrap justify-between gap-16 mt-8">
+
+    <h2 v-if="isLoading" class="text-xl mt-4">Loading...</h2>
+    <!-- <p v-else-if="!isLoading && error">{{ error }}</p> -->
+    <ul v-else class="flex flex-row flex-wrap justify-between gap-16 mt-8">
       <country-card
         v-for="country in filteredList"
         :key="country.ccn3"
@@ -50,9 +53,12 @@ export default {
   },
   data() {
     return {
+      // countries: CountriesDataJson,
       countries: CountriesDataJson,
       regionSelected: 'all regions',
-      searchCountry: ''
+      searchCountry: '',
+      isLoading: false,
+      // error: null
     }
   },
   computed: {
@@ -61,7 +67,7 @@ export default {
       for (let i = 0; i < this.countries.length; i++) {
         allRegions.push(this.countries[i].region)
       }
-      return new Set(allRegions)
+      return new Set(allRegions.sort())
     },
     filteredList() {
       if (this.regionSelected === 'all regions') {
@@ -78,6 +84,34 @@ export default {
     applyTheme() {
       return this.theme.isDark ? 'dark-el' : 'light-el'
     }
+  },
+  methods: {
+    async fetchCountries() {
+      this.isLoading = true
+      this.error = null
+      await fetch('https://restcountries.com/v3.1/all')
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+        })
+        .then((data) => {
+          this.isLoading = false
+          const results = []
+          for (let i in data) {
+            results.push(data[i])
+          }
+          this.countries = results
+        })
+        // .catch((error) => {
+        //   console.log(error)
+        //   this.isLoading = false
+        //   this.error = 'Failed to fetch data - please try again'
+        // })
+    }
+  },
+  mounted() {
+    this.fetchCountries()
   }
 }
 </script>
