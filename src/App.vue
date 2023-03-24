@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       reactive: {
-        isDark: false
+        isDark: true
       }
     }
   },
