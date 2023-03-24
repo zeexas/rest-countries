@@ -5,22 +5,22 @@
   >
     <h2 class="text-2xl font-bold">Where in the world?</h2>
     <button @click="toggleTheme" class="flex flex-row flex-nowrap items-center outline-none">
-      <MoonSVG v-if="!theme.isDark" />
-      <SunSVG v-if="theme.isDark" />
+      <moon-svg v-if="!theme.isDark" />
+      <sun-svg v-if="theme.isDark" />
       <p class="text-md font-bold ml-2">{{ mode === 'dark' ? 'Light' : 'Dark' }} Mode</p>
     </button>
   </div>
 </template>
 
 <script>
-import MoonSVG from '../assets/moon-svg.vue'
-import SunSVG from '../assets/sun-svg.vue'
+import MoonSvg from '../assets/Moon-svg.vue'
+import SunSvg from '../assets/Sun-svg.vue'
 
 export default {
   inject: ['theme'],
   components: {
-    MoonSVG,
-    SunSVG
+    MoonSvg,
+    SunSvg
   },
   props: ['mode'],
   methods: {
