@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-28 px-16 pb-16">
+  <section>
     <div class="flex flex-wrap justify-between">
       <div class="relative w-1/4 min-w-[280px] mr-4">
         <div class="absolute left-4 top-[50%] -translate-y-1/2"><search-svg /></div>
@@ -28,7 +28,8 @@
     <ul v-else class="flex flex-row flex-wrap justify-between gap-16 mt-8">
       <country-card
         v-for="country in filteredList"
-        :key="country.ccn3"
+        :key="country.cca3"
+        :id="country.cca3"
         :flag="country.flags.png"
         :title="country.name.common"
         :population="country.population"
@@ -86,10 +87,10 @@ export default {
     }
   },
   methods: {
-    async fetchCountries() {
+    fetchCountries() {
       this.isLoading = true
       this.error = null
-      await fetch('https://restcountries.com/v3.1/all')
+      fetch('https://restcountries.com/v3.1/all')
         .then((res) => {
           if (res.ok) {
             return res.json()
@@ -111,7 +112,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchCountries()
+    // this.fetchCountries()
   }
 }
 </script>

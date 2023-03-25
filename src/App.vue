@@ -1,19 +1,23 @@
 <template>
-  <div :class="theme">
+  <div class="pt-28 px-16 pb-16 min-h-screen" :class="theme">
     <the-header @toggle-theme="toggleTheme" :mode="theme"></the-header>
-    <home-page></home-page>
+    <!-- <home-page></home-page> -->
+    <!-- <details-page></details-page> -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 // setup
 import TheHeader from './components/TheHeader.vue'
-import HomePage from './components/HomePage.vue'
+// import HomePage from './components/HomePage.vue'
+// import DetailsPage from './components/DetailsPage.vue'
 
 export default {
   components: {
     TheHeader,
-    HomePage
+    // HomePage,
+    // DetailsPage
   },
   data() {
     return {
@@ -43,8 +47,10 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap');
 body {
+  --base-font: hsl(200, 15%, 8%);
+
   font-family: 'Nunito Sans', sans-serif;
-  color: hsl(200, 15%, 8%);
+  color: var(--base-font);
   background-color: hsl(0, 0%, 95%);
   /* font-size: 14px; */
   /* font-weight: 600; */
