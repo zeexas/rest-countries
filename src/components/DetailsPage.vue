@@ -1,6 +1,6 @@
 <template>
   <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6">
-    <left-arrow-svg :theme="theme.isDark ? 'white' : 'black'" class="mr-2"></left-arrow-svg>
+    <left-arrow-svg :theme="theme.isDark ? 'white' : 'hsl(200, 15%, 8%)'" class="mr-2"></left-arrow-svg>
     Back
   </base-button>
   <section class="mt-20 grid grid-cols-2 gap-[10%]">
