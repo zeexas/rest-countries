@@ -39,18 +39,21 @@
       >
     </ul>
   </section>
+  <go-to-top></go-to-top>
 </template>
 
 <script>
 import CountriesDataJson from '../assets/all_countries_20230316.json'
 import CountryCard from './CountryCard.vue'
 import SearchSvg from '../assets/Search-svg.vue'
+import GoToTop from './UI/GoTopButton.vue'
 
 export default {
   inject: ['theme'],
   components: {
     CountryCard,
-    SearchSvg
+    SearchSvg,
+    GoToTop,
   },
   data() {
     return {

@@ -1,8 +1,6 @@
 <template>
   <div class="pt-28 px-16 pb-16 min-h-screen" :class="theme">
     <the-header @toggle-theme="toggleTheme" :mode="theme"></the-header>
-    <!-- <home-page></home-page> -->
-    <!-- <details-page></details-page> -->
     <router-view></router-view>
   </div>
 </template>
@@ -10,14 +8,10 @@
 <script lang="ts">
 // setup
 import TheHeader from './components/TheHeader.vue'
-// import HomePage from './components/HomePage.vue'
-// import DetailsPage from './components/DetailsPage.vue'
 
 export default {
   components: {
     TheHeader,
-    // HomePage,
-    // DetailsPage
   },
   data() {
     return {
@@ -52,8 +46,6 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   color: var(--base-font);
   background-color: hsl(0, 0%, 95%);
-  /* font-size: 14px; */
-  /* font-weight: 600; */
 }
 .dark {
   color: white;

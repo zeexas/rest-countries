@@ -32,7 +32,7 @@
           stroke-linejoin: round;
           stroke-width: 1.5;
         "
-        :style="{stroke: theme.isDark ? 'white' : 'hsl(200, 15%, 8%)' }"
+        :style="{stroke: theme }"
       />
       <polyline
         id="primary-2"
@@ -45,7 +45,7 @@
           stroke-linejoin: round;
           stroke-width: 1.5;
         "
-        :style="{stroke: theme.isDark ? 'white' : 'hsl(200, 15%, 8%)' }"
+        :style="{stroke: theme }"
       />
     </g>
   </svg>
@@ -54,6 +54,7 @@
 <script>
 export default {
   inject: ['theme'],
+  props: ['theme'],
   name: 'LeftArrowSvg'
 }
 </script>
