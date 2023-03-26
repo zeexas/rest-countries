@@ -114,8 +114,5 @@ export default {
         // })
     }
   },
-  mounted() {
-    // this.fetchCountries()
-  }
 }
 </script>

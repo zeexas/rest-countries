@@ -53,7 +53,6 @@
 
 <script>
 export default {
-  inject: ['theme'],
   props: ['theme'],
   name: 'LeftArrowSvg'
 }
