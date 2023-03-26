@@ -1,9 +1,12 @@
 <template>
   <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6">
-    <left-arrow-svg :theme="theme.isDark ? 'white' : 'hsl(200, 15%, 8%)'" class="mr-2"></left-arrow-svg>
-    Back
+    <left-arrow-svg
+      :theme="theme.isDark ? 'white' : 'hsl(200, 15%, 8%)'"
+      class="mr-2"
+    ></left-arrow-svg>
+    Home
   </base-button>
-  <section class="mt-20 grid grid-cols-2 gap-[10%]">
+  <section v-if="country" class="mt-20 grid grid-cols-2 gap-[10%]">
     <img
       :src="country.flags.png"
       alt="title"
@@ -53,13 +56,13 @@
           >No border-countries</base-button
         >
         <div v-else>
-          <base-button
-            v-for="c in country.borders"
-            :key="c.cca3"
-            :class="applyTheme"
-            class="w-auto mr-1 mb-1 py-1 font-light"
-            >{{ alpha3List[c] }}</base-button
-          >
+          <border-country
+            v-for="cca3 in country.borders"
+            :key="cca3"
+            :id="cca3"
+            :borderCountry="alpha3List[cca3]"
+            @setCountry="fetchDetails"
+          ></border-country>
         </div>
       </div>
     </div>
@@ -69,12 +72,14 @@
 <script>
 import LeftArrowSvg from '../assets/Left-arrow-svg.vue'
 import AllCountries from '../assets/all_countries_20230324.json'
+import BorderCountry from './BorderCountry.vue'
 
 export default {
   inject: ['theme'],
   props: [],
   components: {
-    LeftArrowSvg
+    LeftArrowSvg,
+    BorderCountry,
   },
   data() {
     return {
@@ -86,15 +91,12 @@ export default {
       return this.theme.isDark ? 'dark-el' : 'light-el'
     },
     alpha3List() {
-      // let list = AllCountries
-      // console.log(list);
       let list = {}
       for (let i = 0; i < AllCountries.length; i++) {
-        // console.log(item)
         list[AllCountries[i].cca3] = AllCountries[i].name.common
       }
       return list
-    }
+    },
   },
   methods: {
     backHome() {
@@ -110,7 +112,7 @@ export default {
         .then((data) => {
           this.country = data[0]
         })
-    }
+    },
   },
   created() {
     this.alpha3List
@@ -124,6 +126,5 @@ export default {
 .prop_title {
   font-weight: 600;
   color: darkcyan;
-  /* color: lightslategray; */
 }
 </style>
