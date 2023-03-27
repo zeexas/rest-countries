@@ -22,7 +22,9 @@ export default {
     MoonSvg,
     SunSvg
   },
-  props: ['mode'],
+  props: {
+    mode: String
+  },
   methods: {
     toggleTheme() {
       this.$emit('toggleTheme')
