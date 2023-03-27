@@ -6,15 +6,15 @@
     ></left-arrow-svg>
     Home
   </base-button>
-  <section v-if="country" class="mt-20 grid grid-cols-2 gap-[10%]">
+  <section v-if="country" class="mt-10 md:mt-16 grid md:grid-cols-2 gap-[7%] xl:gap-[10%]">
     <img
       :src="country.flags.png"
       alt="title"
-      class="min-w-[80%] justify-self-center drop-shadow-md"
+      class="min-w-[100%] md:min-w-[80%] justify-self-center drop-shadow-md"
     />
-    <div class="self-center text-sm">
-      <h2 class="text-3xl font-bold mb-8">{{ country.name.common }}</h2>
-      <div class="grid grid-cols-2 leading-9 mb-10 gap-4">
+    <div class="self-center text-xs sm:text-sm pb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 md:mb-4">{{ country.name.common }}</h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 leading-6 md:leading-7 mb-4 md:mb-8 gap-4">
         <ul>
           <li><span class="prop_title">Official Name:</span> {{ country.name.official }}</li>
           <li>
@@ -39,11 +39,11 @@
           </li>
           <li>
             <span class="prop_title">Currencies:</span>
-            {{ Object.keys(country.currencies).join(', ') }}
+            {{ country.currencies ? Object.keys(country.currencies).join(', ') : '' }}
           </li>
           <li>
             <span class="prop_title">Languages:</span>
-            {{ Object.values(country.languages).join(', ') }}
+            {{ country.languages ? Object.values(country.languages).join(', ') : '' }}
           </li>
         </ul>
       </div>
@@ -55,15 +55,14 @@
           class="w-auto py-1 font-light cursor-default"
           >No border-countries</base-button
         >
-        <div v-else>
-          <border-country
-            v-for="cca3 in country.borders"
-            :key="cca3"
-            :id="cca3"
-            :borderCountry="alpha3List[cca3]"
-            @setCountry="fetchDetails"
-          ></border-country>
-        </div>
+        <border-country
+          v-else
+          v-for="cca3 in country.borders"
+          :key="cca3"
+          :id="cca3"
+          :borderCountry="alpha3List[cca3]"
+          @setCountry="fetchDetails"
+        ></border-country>
       </div>
     </div>
   </section>
@@ -79,7 +78,7 @@ export default {
   props: [],
   components: {
     LeftArrowSvg,
-    BorderCountry,
+    BorderCountry
   },
   data() {
     return {
@@ -96,7 +95,7 @@ export default {
         list[AllCountries[i].cca3] = AllCountries[i].name.common
       }
       return list
-    },
+    }
   },
   methods: {
     backHome() {
@@ -112,7 +111,7 @@ export default {
         .then((data) => {
           this.country = data[0]
         })
-    },
+    }
   },
   created() {
     this.alpha3List

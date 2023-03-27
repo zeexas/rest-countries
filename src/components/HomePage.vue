@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="flex flex-wrap justify-between">
-      <div class="relative w-1/4 min-w-[280px] mr-4">
+    <div class="flex flex-wrap justify-between gap-2">
+      <div class="relative w-1/4 min-w-[280px]">
         <div class="absolute left-4 top-[50%] -translate-y-1/2"><search-svg /></div>
         <input
           type="search"
@@ -25,7 +25,7 @@
 
     <h2 v-if="isLoading" class="text-xl mt-4">Loading...</h2>
     <!-- <p v-else-if="!isLoading && error">{{ error }}</p> -->
-    <ul v-else class="flex flex-row flex-wrap justify-between gap-16 mt-8">
+    <ul v-else class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 sm:gap-12 lg:gap-14 2xl:gap-16 mt-8">
       <country-card
         v-for="country in filteredList"
         :key="country.cca3"
