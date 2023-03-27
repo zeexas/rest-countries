@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-28 px-16 pb-16 min-h-screen" :class="theme">
+  <div class="pt-24 sm:pt-28 px-8 sm:px-12 lg:px-16 pb-8 lg:pb-12 2xl:pb-16 min-h-screen" :class="theme">
     <the-header @toggle-theme="toggleTheme" :mode="theme"></the-header>
     <router-view></router-view>
   </div>
