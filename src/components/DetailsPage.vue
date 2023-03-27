@@ -1,5 +1,5 @@
 <template>
-  <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6">
+  <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm">
     <left-arrow-svg
       :theme="theme.isDark ? 'white' : 'hsl(200, 15%, 8%)'"
       class="mr-2"
@@ -104,8 +104,12 @@ export default {
     fetchDetails(code) {
       fetch('https://restcountries.com/v3.1/alpha/' + code)
         .then((res) => {
-          if (res.ok) {
+          if (res.status === 200) {
+            console.log('Details from external API')
             return res.json()
+          } else {
+            console.log('Details from local JSON. Server is not available')
+            return AllCountries.filter(country => country.cca3 === code)
           }
         })
         .then((data) => {
