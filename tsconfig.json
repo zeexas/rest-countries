@@ -5,6 +5,9 @@
     "baseUrl": ".",
     "allowJs": true,
     "noImplicitAny": false,
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "verbatimModuleSyntax": true,
     "paths": {
       "@/*": ["./src/*"]
     }

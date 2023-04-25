@@ -47,9 +47,9 @@
 
 <script>
 import CountriesDataJson from '../assets/all_countries_20230324.json'
-import CountryCard from './CountryCard.vue'
+import CountryCard from '../components/CountryCard.vue'
 import SearchSvg from '../assets/Search-svg.vue'
-import GoToTop from './UI/GoTopButton.vue'
+import GoToTop from '../components/UI/GoTopButton.vue'
 
 export default {
   inject: ['theme'],
