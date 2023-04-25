@@ -12,7 +12,10 @@
 <script>
 export default {
   inject: ['theme'],
-  props: ['id', 'borderCountry'],
+  props: {
+    id: String,
+    borderCountry: String,
+  },
   data() {
     return {}
   },

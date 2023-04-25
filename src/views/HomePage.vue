@@ -47,9 +47,9 @@
 
 <script>
 import CountriesDataJson from '../assets/all_countries_20230324.json'
-import CountryCard from './CountryCard.vue'
+import CountryCard from '../components/CountryCard.vue'
 import SearchSvg from '../assets/Search-svg.vue'
-import GoToTop from './UI/GoTopButton.vue'
+import GoToTop from '../components/UI/GoTopButton.vue'
 
 export default {
   inject: ['theme'],
@@ -100,19 +100,7 @@ export default {
             console.log('Data from external API')
             return res.json()
           } else {
-            fetch('/all_countries_20230324.json')
-              .then((res) => {
-                console.log('Data from local JSON. Server is not available')
-                return res.json()
-              })
-              .then((data) => {
-                this.isLoading = false
-                const results = []
-                for (let i in data) {
-                  results.push(data[i])
-                }
-                this.countries = results
-              })
+            this.fetchLocalData()
           }
         })
         .then((data) => {
@@ -123,9 +111,25 @@ export default {
           }
           this.countries = results
         })
+        .catch((error) => {
+          console.log(error)
+          this.fetchLocalData()
+        })
     },
-    setCountries() {
-      this.countries = CountriesDataJson
+    fetchLocalData() {
+      fetch('/all_countries_20230324.json')
+        .then((res) => {
+          console.log('Data from local JSON. Server is not available')
+          return res.json()
+        })
+        .then((data) => {
+          this.isLoading = false
+          const results = []
+          for (let i in data) {
+            results.push(data[i])
+          }
+          this.countries = results
+        })
     }
   },
   mounted() {

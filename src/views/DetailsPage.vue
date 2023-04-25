@@ -71,11 +71,10 @@
 <script>
 import LeftArrowSvg from '../assets/Left-arrow-svg.vue'
 import AllCountries from '../assets/all_countries_20230324.json'
-import BorderCountry from './BorderCountry.vue'
+import BorderCountry from '../components/BorderCountry.vue'
 
 export default {
   inject: ['theme'],
-  props: [],
   components: {
     LeftArrowSvg,
     BorderCountry

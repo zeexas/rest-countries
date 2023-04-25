@@ -13,7 +13,14 @@
 <script>
 export default {
   inject: ['theme'],
-  props: ['id', 'flag', 'title', 'population', 'region', 'capital'],
+  props: {
+    id: String,
+    flag: String,
+    title: String,
+    population: Number,
+    region: String,
+    capital: Array,
+  },
   computed: {
     applyTheme() {
       return this.theme.isDark ? 'dark-el' : 'light-el'
