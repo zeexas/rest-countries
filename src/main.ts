@@ -1,9 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// import router from './router'
+import './index.css'
+import BaseButton from './components/UI/BaseButton.vue'
+import router from './router'
 
 const app = createApp(App)
 
-// app.use(router)
+app.component('base-button', BaseButton)
+
+app.use(router)
 
 app.mount('#app')
