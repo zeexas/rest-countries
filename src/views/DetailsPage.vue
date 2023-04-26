@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     backHome() {
-      this.$router.push('/')
+      this.$router.push('/rest-countries/')
     },
     fetchDetails(code) {
       fetch('https://restcountries.com/v3.1/alpha/' + code)

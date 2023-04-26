@@ -26,7 +26,7 @@ export default {
       return this.theme.isDark ? 'dark-el' : 'light-el'
     },
     countryLink() {
-      return '/' + this.id
+      return '/rest-countries/' + this.id
     }
   }
 }
