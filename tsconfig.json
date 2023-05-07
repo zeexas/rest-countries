@@ -9,7 +9,7 @@
     "importsNotUsedAsValues": "remove",
     "verbatimModuleSyntax": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
   },
 

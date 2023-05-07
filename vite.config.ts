@@ -19,5 +19,5 @@ export default defineConfig({
       '.vue'
     ]
   },
-  base: '/rest-countries/'
+  base: '/'
 })
