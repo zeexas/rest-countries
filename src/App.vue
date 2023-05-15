@@ -1,6 +1,6 @@
 <template>
   <div class="pt-24 sm:pt-28 px-8 sm:px-12 lg:px-16 pb-8 lg:pb-12 2xl:pb-16 min-h-screen" :class="theme">
-    <the-header @toggle-theme="toggleTheme" :mode="theme"></the-header>
+    <the-header></the-header>
     <router-view></router-view>
   </div>
 </template>
@@ -12,28 +12,11 @@ export default {
   components: {
     TheHeader,
   },
-  data() {
-    return {
-      reactive: {
-        isDark: true
-      }
-    }
-  },
-  provide() {
-    return {
-      theme: this.reactive
-    }
-  },
-  methods: {
-    toggleTheme() {
-      this.reactive.isDark = !this.reactive.isDark
-    }
-  },
   computed: {
     theme() {
-      return this.reactive.isDark ? 'dark' : ''
+      return this.$store.getters.currentTheme
     }
-  }
+  },
 }
 </script>
 
@@ -44,25 +27,16 @@ body {
 
   font-family: 'Nunito Sans', sans-serif;
   color: var(--base-font);
-  background-color: hsl(0, 0%, 95%);
+  background-color: #e2e8f0;
 }
 .dark {
-  color: white;
-  background-color: hsl(207, 26%, 17%);
-}
-.dark-bg {
+  color: #f8fafc;
   background-color: hsl(207, 26%, 17%);
 }
 .dark-el {
   background-color: hsl(209, 23%, 22%);
 }
-.light-input {
-  background-color: hsl(0, 0%, 52%);
-}
-.light-bg {
-  background-color: hsl(0, 0%, 98%);
-}
 .light-el {
-  background-color: hsl(0, 0%, 100%);
+  background-color: #f1f5f9;
 }
 </style>

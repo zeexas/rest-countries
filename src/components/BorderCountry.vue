@@ -11,17 +11,16 @@
 
 <script>
 export default {
-  inject: ['theme'],
   props: {
     id: String,
     borderCountry: String,
   },
-  data() {
-    return {}
-  },
   computed: {
+    theme() {
+      return this.$store.getters.currentTheme
+    },
     applyTheme() {
-      return this.theme.isDark ? 'dark-el' : 'light-el'
+      return this.theme === 'dark' ? 'dark-el' : 'light-el'
     }
   },
   methods: {
