@@ -1,7 +1,7 @@
 <template>
   <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm">
     <left-arrow-svg
-      :theme="theme.isDark ? 'white' : 'hsl(200, 15%, 8%)'"
+      :theme="theme === 'dark' ? 'white' : 'hsl(200, 15%, 8%)'"
       class="mr-2"
     ></left-arrow-svg>
     Home
@@ -85,8 +85,11 @@ export default {
     }
   },
   computed: {
+    theme() {
+      return this.$store.getters.currentTheme
+    },
     applyTheme() {
-      return this.theme.isDark ? 'dark-el' : 'light-el'
+      return this.theme === 'dark' ? 'dark-el' : 'light-el'
     },
     alpha3List() {
       let list = {}

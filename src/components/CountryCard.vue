@@ -12,7 +12,6 @@
 
 <script>
 export default {
-  inject: ['theme'],
   props: {
     id: String,
     flag: String,
@@ -22,8 +21,11 @@ export default {
     capital: Array,
   },
   computed: {
+    theme() {
+      return this.$store.getters.currentTheme
+    },
     applyTheme() {
-      return this.theme.isDark ? 'dark-el' : 'light-el'
+      return this.theme === 'dark' ? 'dark-el' : 'light-el'
     },
     countryLink() {
       return '/' + this.id
