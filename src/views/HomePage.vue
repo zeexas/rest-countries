@@ -52,7 +52,7 @@ import SearchSvg from '../assets/Search-svg.vue'
 import GoToTop from '../components/UI/GoTopButton.vue'
 
 export default {
-  inject: ['theme'],
+  // inject: ['theme'],
   components: {
     CountryCard,
     SearchSvg,
@@ -86,8 +86,11 @@ export default {
           return country.name.common.toLowerCase().includes(this.searchCountry.toLowerCase())
         })
     },
+    theme() {
+      return this.$store.getters.currentTheme
+    },
     applyTheme() {
-      return this.theme.isDark ? 'dark-el' : 'light-el'
+      return this.theme === 'dark' ? 'dark-el' : 'light-el'
     }
   },
   methods: {
