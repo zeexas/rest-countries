@@ -1,8 +1,5 @@
 <template>
-  <base-button
-    @click="backHome"
-    class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm"
-  >
+  <base-button @click="backHome" class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm">
     <left-arrow-svg
       :theme="theme === 'dark' ? 'white' : 'hsl(200, 15%, 8%)'"
       class="mr-2"
@@ -13,7 +10,7 @@
     <section v-if="country" class="mt-10 md:mt-16 grid md:grid-cols-2 gap-[7%] xl:gap-[10%]">
       <img
         :src="country.flags.png"
-        alt="title"
+        :alt="country.flags.alt"
         class="min-w-[100%] md:min-w-[80%] justify-self-center drop-shadow-md"
       />
       <div class="self-center text-xs sm:text-sm pb-8">
@@ -24,7 +21,13 @@
           <ul>
             <li><span class="prop_title">Official Name:</span> {{ country.name.official }}</li>
             <li>
-              <span class="prop_title">Population:</span> {{ (+country.population).toLocaleString() }}
+              <span class="prop_title">Population:</span>
+              {{ (+country.population).toLocaleString() }}
+            </li>
+            <li>
+              <span class="prop_title">Area:</span> {{ (+country.area).toLocaleString() }} km<sup
+                >2</sup
+              >
             </li>
             <li>
               <span class="prop_title">Region:</span>
@@ -34,11 +37,12 @@
               <span class="prop_title">Sub Region:</span>
               {{ country.subregion ? country.subregion : '' }}
             </li>
-            <li>
-              <span class="prop_title">Capital:</span> {{ country.capital ? country.capital[0] : '' }}
-            </li>
           </ul>
           <ul>
+            <li>
+              <span class="prop_title">Capital:</span>
+              {{ country.capital ? country.capital[0] : '' }}
+            </li>
             <li>
               <span class="prop_title">Top Level Domain:</span>
               {{ country.tld ? country.tld.join(', ') : '' }}
@@ -51,13 +55,17 @@
               <span class="prop_title">Languages:</span>
               {{ country.languages ? Object.values(country.languages).join(', ') : '' }}
             </li>
+            <li>
+              <span class="prop_title">Map: </span>
+              <a :href="country.maps.googleMaps" target="_blanc" rel="noopener noreferrer">
+                {{ country.name.common }}</a
+              >
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="prop_title mb-2 mr-2 inline-block">Border Countries:</h3>
-          <base-button
-            v-if="!country.borders"
-            class="w-auto py-1 font-light cursor-default"
+          <base-button v-if="!country.borders" class="w-auto py-1 font-light cursor-default"
             >No border-countries</base-button
           >
           <border-country
