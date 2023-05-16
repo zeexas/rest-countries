@@ -1,71 +1,77 @@
 <template>
-  <base-button @click="backHome" :class="applyTheme" class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm">
+  <base-button
+    @click="backHome"
+    class="flex items-center px-6 w-28 sm:w-36 text-xs sm:text-sm"
+  >
     <left-arrow-svg
       :theme="theme === 'dark' ? 'white' : 'hsl(200, 15%, 8%)'"
       class="mr-2"
     ></left-arrow-svg>
     Home
   </base-button>
-  <section v-if="country" class="mt-10 md:mt-16 grid md:grid-cols-2 gap-[7%] xl:gap-[10%]">
-    <img
-      :src="country.flags.png"
-      alt="title"
-      class="min-w-[100%] md:min-w-[80%] justify-self-center drop-shadow-md"
-    />
-    <div class="self-center text-xs sm:text-sm pb-8">
-      <h2 class="text-2xl sm:text-3xl font-bold mb-4 md:mb-4">{{ country.name.common }}</h2>
-      <div class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 leading-6 md:leading-7 mb-4 md:mb-8 gap-4">
-        <ul>
-          <li><span class="prop_title">Official Name:</span> {{ country.name.official }}</li>
-          <li>
-            <span class="prop_title">Population:</span> {{ (+country.population).toLocaleString() }}
-          </li>
-          <li>
-            <span class="prop_title">Region:</span>
-            {{ country.region ? country.region : 'No data' }}
-          </li>
-          <li>
-            <span class="prop_title">Sub Region:</span>
-            {{ country.subregion ? country.subregion : '' }}
-          </li>
-          <li>
-            <span class="prop_title">Capital:</span> {{ country.capital ? country.capital[0] : '' }}
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span class="prop_title">Top Level Domain:</span>
-            {{ country.tld ? country.tld.join(', ') : '' }}
-          </li>
-          <li>
-            <span class="prop_title">Currencies:</span>
-            {{ country.currencies ? Object.keys(country.currencies).join(', ') : '' }}
-          </li>
-          <li>
-            <span class="prop_title">Languages:</span>
-            {{ country.languages ? Object.values(country.languages).join(', ') : '' }}
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="prop_title mb-2 mr-2 inline-block">Border Countries:</h3>
-        <base-button
-          v-if="!country.borders"
-          :class="applyTheme"
-          class="w-auto py-1 font-light cursor-default"
-          >No border-countries</base-button
+  <transition name="country">
+    <section v-if="country" class="mt-10 md:mt-16 grid md:grid-cols-2 gap-[7%] xl:gap-[10%]">
+      <img
+        :src="country.flags.png"
+        alt="title"
+        class="min-w-[100%] md:min-w-[80%] justify-self-center drop-shadow-md"
+      />
+      <div class="self-center text-xs sm:text-sm pb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 md:mb-4">{{ country.name.common }}</h2>
+        <div
+          class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 leading-6 md:leading-7 mb-4 md:mb-8 gap-4"
         >
-        <border-country
-          v-else
-          v-for="cca3 in country.borders"
-          :key="cca3"
-          :id="cca3"
-          :borderCountry="alpha3List[cca3]"
-          @setCountry="fetchDetails"
-        ></border-country>
+          <ul>
+            <li><span class="prop_title">Official Name:</span> {{ country.name.official }}</li>
+            <li>
+              <span class="prop_title">Population:</span> {{ (+country.population).toLocaleString() }}
+            </li>
+            <li>
+              <span class="prop_title">Region:</span>
+              {{ country.region ? country.region : 'No data' }}
+            </li>
+            <li>
+              <span class="prop_title">Sub Region:</span>
+              {{ country.subregion ? country.subregion : '' }}
+            </li>
+            <li>
+              <span class="prop_title">Capital:</span> {{ country.capital ? country.capital[0] : '' }}
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <span class="prop_title">Top Level Domain:</span>
+              {{ country.tld ? country.tld.join(', ') : '' }}
+            </li>
+            <li>
+              <span class="prop_title">Currencies:</span>
+              {{ country.currencies ? Object.keys(country.currencies).join(', ') : '' }}
+            </li>
+            <li>
+              <span class="prop_title">Languages:</span>
+              {{ country.languages ? Object.values(country.languages).join(', ') : '' }}
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="prop_title mb-2 mr-2 inline-block">Border Countries:</h3>
+          <base-button
+            v-if="!country.borders"
+            class="w-auto py-1 font-light cursor-default"
+            >No border-countries</base-button
+          >
+          <border-country
+            v-else
+            v-for="cca3 in country.borders"
+            :key="cca3"
+            :id="cca3"
+            :borderCountry="alpha3List[cca3]"
+            @setCountry="fetchDetails"
+          ></border-country>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </transition>
 </template>
 
 <script>
@@ -74,7 +80,6 @@ import AllCountries from '../assets/all_countries_20230324.json'
 import BorderCountry from '../components/BorderCountry.vue'
 
 export default {
-  inject: ['theme'],
   components: {
     LeftArrowSvg,
     BorderCountry
@@ -111,7 +116,7 @@ export default {
             return res.json()
           } else {
             console.log('Details from local JSON. Server is not available')
-            return AllCountries.filter(country => country.cca3 === code)
+            return AllCountries.filter((country) => country.cca3 === code)
           }
         })
         .then((data) => {
@@ -131,5 +136,21 @@ export default {
 .prop_title {
   font-weight: 600;
   color: darkcyan;
+}
+.country-enter-from {
+  opacity: 0;
+}
+.country-enter-to {
+  opacity: 1;
+}
+.country-enter-active,
+.country-leave-active {
+  transition: all 0.4s ease;
+}
+.country-leave-from {
+  opacity: 1;
+}
+.country-leave-to {
+  opacity: 0;
 }
 </style>

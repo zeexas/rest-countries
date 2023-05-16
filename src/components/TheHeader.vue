@@ -7,9 +7,6 @@
     <button @click="toggleTheme" class="flex flex-row flex-nowrap items-center outline-none">
       <moon-svg v-if="!(theme === 'dark')" />
       <sun-svg v-if="theme === 'dark'" />
-      <!-- <p class="text-xs sm:text-sm lg:text-base ml-2">
-        {{ theme === 'dark' ? 'Light' : 'Dark' }} Mode
-      </p> -->
     </button>
   </div>
 </template>

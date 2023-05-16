@@ -1,7 +1,16 @@
 <template>
-  <div class="pt-24 sm:pt-28 px-8 sm:px-12 lg:px-16 pb-8 lg:pb-12 2xl:pb-16 min-h-screen" :class="theme">
+  <div
+    class="pt-24 sm:pt-28 px-8 sm:px-12 lg:px-16 pb-8 lg:pb-12 2xl:pb-16 min-h-screen"
+    :class="theme"
+  >
     <the-header></the-header>
-    <router-view></router-view>
+    <router-view v-slot="{ Component, route }">
+      <transition name="route" mode="out-in">
+        <div :key="route.fullPath">
+          <component :is="Component"></component>
+        </div>
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -10,13 +19,13 @@ import TheHeader from './components/TheHeader.vue'
 
 export default {
   components: {
-    TheHeader,
+    TheHeader
   },
   computed: {
     theme() {
       return this.$store.getters.currentTheme
     }
-  },
+  }
 }
 </script>
 
@@ -24,6 +33,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap');
 body {
   --base-font: hsl(200, 15%, 8%);
+  --base-bg: hsl(207, 26%, 17%);
+  --bg-el: hsl(209, 23%, 22%);
 
   font-family: 'Nunito Sans', sans-serif;
   color: var(--base-font);
@@ -31,12 +42,26 @@ body {
 }
 .dark {
   color: #f8fafc;
-  background-color: hsl(207, 26%, 17%);
+  background-color: var(--base-bg);
 }
 .dark-el {
-  background-color: hsl(209, 23%, 22%);
+  background-color: var(--bg-el);
 }
 .light-el {
   background-color: #f1f5f9;
+}
+
+/*   route transition   */
+.route-enter-from {
+  opacity: 0;
+}
+.route-enter-active {
+  transition: all 0.3s ease-out;
+}
+.route-leave-to {
+  opacity: 0;
+}
+.route-leave-active {
+  transition: all 0.3s ease-in;
 }
 </style>
