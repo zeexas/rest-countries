@@ -1,20 +1,12 @@
 <template>
   <div @click="scrollToTop()" :class="['scroll_to_top', { go_top: isTop }]">
-    <left-arrow-svg
-      :theme="'white'"
-      class="rotate-90 w-[70%] h-[70%]"
-    ></left-arrow-svg>
+    <p class="font-semibold text-2xl">top</p>
   </div>
 </template>
 
 <script>
-import LeftArrowSvg from '../../assets/Left-arrow-svg.vue'
-
 export default {
   name: 'GoToTop',
-  components: {
-    LeftArrowSvg
-  },
   data() {
     return {
       isTop: false
@@ -45,24 +37,16 @@ export default {
   cursor: pointer;
   bottom: -8rem;
   right: 2rem;
-  background: darkorange;
+  background: #ffa101;
+  color: white;
   z-index: 20;
-  width: 5vw;
-  height: 5vw;
-  min-width: 3.5rem;
-  min-height: 3.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  text-align: center;
+  padding: 0.7rem 1rem;
+  border-radius: 10%;
   opacity: 0;
   visibility: hidden;
-  transition: 0.6s;
+  transition: 0.5s;
   overflow: hidden;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .scroll_to_top:hover {

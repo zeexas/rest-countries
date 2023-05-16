@@ -9,7 +9,6 @@ const store = createStore({
   mutations: {
     switchTheme(state) {
       state.theme = state.theme === 'dark' ? 'light' : 'dark'
-      console.log(state.theme)
     }
   },
   getters: {

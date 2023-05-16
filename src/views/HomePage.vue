@@ -25,9 +25,12 @@
 
     <h2 v-if="isLoading" class="text-xl mt-4">Loading...</h2>
     <!-- <p v-else-if="!isLoading && error">{{ error }}</p> -->
-    <ul
+    <transition-group
       v-else
       class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 sm:gap-12 lg:gap-14 2xl:gap-16 mt-8"
+      tag="ul"
+      name="list"
+      appear
     >
       <country-card
         v-for="country in filteredList"
@@ -40,7 +43,7 @@
         :capital="country.capital"
         >{{ country.name.common }}</country-card
       >
-    </ul>
+    </transition-group>
   </section>
   <go-to-top></go-to-top>
 </template>
@@ -140,3 +143,21 @@ export default {
   }
 }
 </script>
+
+<style>
+  .list-enter-from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  .list-enter-to {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .list-enter-active {
+    transition: all 0.4s ease;
+  }
+  .list-move {
+    transition: all 0.4s ease;
+  }
+  
+</style>
