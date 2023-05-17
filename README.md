@@ -1,6 +1,6 @@
 # Welcome to REST-countries App!
 
-App source: 
+App link: https://lee-rest-countries.netlify.app/
 
 This App is integrate with the [REST Countries API](https://restcountries.com) to pull country data and display it.
 
@@ -23,10 +23,10 @@ Second one:
 
 - Semantic HTML5 markup
 - Tailwind CSS
-- Flexbox
-- CSS Grid
+- Flex & Grid
 - Mobile-first workflow - adaptive and responsive
 - [Vue](https://vuejs.org/) - JS framework
 - TypeScript
 - Vue-router
+- Vuex
 - Vite
