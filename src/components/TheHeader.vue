@@ -1,13 +1,16 @@
 <template>
   <div
-    class="flex justify-between items-center p-8 sm:px-12 lg:px-16 shadow-md fixed top-0 left-0 right-0 z-50 font-bold"
+    class="flex justify-between items-center p-8 sm:px-12 lg:px-16 shadow-md fixed top-0 left-0 right-0 z-50 font-semibold"
     :class="theme === 'dark' ? 'dark-el' : 'light-el'"
   >
     <h2 class="text-sm sm:text-xl lg:text-2xl">Where in the world?</h2>
-    <button @click="toggleTheme" class="flex flex-row flex-nowrap items-center outline-none">
-      <moon-svg v-if="!(theme === 'dark')" />
-      <sun-svg v-if="theme === 'dark'" />
-    </button>
+    <div class="flex gap-12">
+      <button @click="switchMode" class="capitalize">{{ mode }}</button>
+      <button @click="toggleTheme" class="flex flex-row flex-nowrap items-center outline-none">
+        <moon-svg v-if="!(theme === 'dark')" />
+        <sun-svg v-if="theme === 'dark'" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -23,11 +26,17 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.currentTheme
-    }
+    },
+    mode() {
+      return this.$route.name === 'quiz' ? 'browse' : 'quiz'
+    },
   },
   methods: {
     toggleTheme() {
       this.$store.commit('switchTheme')
+    },
+    switchMode() {
+      this.$route.name === 'quiz' ? this.$router.push('/') : this.$router.push('/quiz')
     }
   }
 }
