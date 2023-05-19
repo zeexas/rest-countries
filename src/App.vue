@@ -34,21 +34,23 @@ export default {
 body {
   --base-font: hsl(200, 15%, 8%);
   --base-bg: hsl(207, 26%, 17%);
-  --bg-el: hsl(209, 23%, 22%);
+  --bg-el-dark: hsl(209, 23%, 22%);
+  --bg-el-light: #f1f5f9;
+  --bg-light: #e2e8f0;
 
   font-family: 'Nunito Sans', sans-serif;
   color: var(--base-font);
-  background-color: #e2e8f0;
+  background-color: var(--bg-light);
 }
 .dark {
   color: #f8fafc;
   background-color: var(--base-bg);
 }
 .dark-el {
-  background-color: var(--bg-el);
+  background-color: var(--bg-el-dark);
 }
 .light-el {
-  background-color: #f1f5f9;
+  background-color: var(--bg-el-light);
 }
 
 /*   route transition   */

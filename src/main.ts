@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 
 const app = createApp(App)
+app.config.unwrapInjectedRef = true;
 
 app.component('base-button', BaseButton)
 
