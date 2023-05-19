@@ -18,7 +18,7 @@
         name="selectRegion"
         id="selectRegion"
       >
-        <option value="all regions" selected>Filter by Region</option>
+        <option value="World" selected>Filter by Region</option>
         <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
       </select>
     </div>
@@ -53,9 +53,9 @@ import CountriesDataJson from '../assets/all_countries_20230324.json'
 import CountryCard from '../components/CountryCard.vue'
 import SearchSvg from '../assets/Search-svg.vue'
 import GoToTop from '../components/UI/GoTopButton.vue'
+import { regionsList } from '../data/index'
 
 export default {
-  // inject: ['theme'],
   components: {
     CountryCard,
     SearchSvg,
@@ -64,21 +64,17 @@ export default {
   data() {
     return {
       countries: CountriesDataJson,
-      regionSelected: 'all regions',
+      regionSelected: 'World',
       searchCountry: '',
       isLoading: false
     }
   },
   computed: {
     regions() {
-      let allRegions = []
-      for (let i = 0; i < this.countries.length; i++) {
-        allRegions.push(this.countries[i].region)
-      }
-      return new Set(allRegions.sort())
+      return regionsList
     },
     filteredList() {
-      if (this.regionSelected === 'all regions') {
+      if (this.regionSelected === 'World') {
         return this.countries.filter((country) => {
           return country.name.common.toLowerCase().includes(this.searchCountry.toLowerCase())
         })
@@ -145,19 +141,18 @@ export default {
 </script>
 
 <style>
-  .list-enter-from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  .list-enter-to {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .list-enter-active {
-    transition: all 0.4s ease;
-  }
-  .list-move {
-    transition: all 0.4s ease;
-  }
-  
+.list-enter-from {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.list-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+.list-enter-active {
+  transition: all 0.4s ease;
+}
+.list-move {
+  transition: all 0.4s ease;
+}
 </style>

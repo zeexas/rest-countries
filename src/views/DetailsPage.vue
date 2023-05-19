@@ -6,7 +6,7 @@
     ></left-arrow-svg>
     Home
   </base-button>
-  <transition name="country">
+  <!-- <transition name="country"> -->
     <section v-if="country" class="mt-10 md:mt-16 grid md:grid-cols-2 gap-[7%] xl:gap-[10%]">
       <img
         :src="country.flags.png"
@@ -79,7 +79,7 @@
         </div>
       </div>
     </section>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -145,7 +145,7 @@ export default {
   font-weight: 600;
   color: darkcyan;
 }
-.country-enter-from {
+/* .country-enter-from {
   opacity: 0;
 }
 .country-enter-to {
@@ -160,5 +160,5 @@ export default {
 }
 .country-leave-to {
   opacity: 0;
-}
+} */
 </style>
