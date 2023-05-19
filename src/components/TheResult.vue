@@ -6,7 +6,7 @@
         ref="progress"
       >
         <div
-          class="absolute text-base sm:text-xl rounded-md sm:font-semibold -top-2 sm:-top-4 bg-teal-600 px-4 py-2 sm:py-3"
+          class="absolute text-base sm:text-xl text-white rounded-md sm:font-semibold -top-2 sm:-top-4 bg-teal-600 px-4 py-2 sm:py-3"
         >
           Congrats!
         </div>
