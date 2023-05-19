@@ -1,7 +1,9 @@
 <template>
   <section class="bg-teal-000 w-full">
-    <header class="flex justify-between items-center h-14 px-8 border-b border-slate-700 dark:border-slate-500 text-lg">
-      <p class="font-medium">The Country Quiz</p>
+    <header
+      class="flex justify-between items-center h-14 px-8 border-b border-slate-700 dark:border-slate-500 text-lg"
+    >
+      <p class="font-semibold">The Country Quiz</p>
       <div class="flex gap-10">
         <!-- <div>{{ score }}</div> -->
         <!-- <div>timer</div> -->
@@ -9,7 +11,7 @@
       </div>
     </header>
 
-    <div v-if="!seeResults" class="w-[70%] mx-auto mt-8">
+    <div v-show="!seeResults" class="w-[70%] mx-auto mt-8">
       <div class="flex flex-col px-8 items-center">
         <div class="w-full flex justify-between items-center">
           <h2 class="text-lg">Guess the Country</h2>
@@ -134,7 +136,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .right {
   border-color: #14b8a6;
 }

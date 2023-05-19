@@ -66,4 +66,16 @@ body {
 .route-leave-active {
   transition: all 0.3s ease-in;
 }
+.switch-enter-from,
+.switch-leave-to {
+  opacity: 0;
+}
+.switch-enter-to,
+.switch-leave-from {
+  opacity: 1;
+}
+.switch-enter-active,
+.switch-leave-active {
+  transition: all 0.5s ease;
+}
 </style>
