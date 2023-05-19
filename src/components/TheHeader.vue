@@ -5,7 +5,7 @@
   >
     <h2 class="text-sm sm:text-xl lg:text-2xl">Where in the world?</h2>
     <div class="flex gap-12">
-      <button @click="switchMode" class="capitalize text-lg">{{ mode }}</button>
+      <button @click="switchMode" class="capitalize text-xs sm:text-base lg:text-lg">{{ mode }}</button>
       <button @click="toggleTheme" class="flex flex-row flex-nowrap items-center outline-none">
         <moon-svg v-if="!(theme === 'dark')" />
         <sun-svg v-if="theme === 'dark'" />

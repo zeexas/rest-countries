@@ -18,7 +18,7 @@
         name="selectRegion"
         id="selectRegion"
       >
-        <option value="world" selected>Filter by Region</option>
+        <option value="World" selected>Filter by Region</option>
         <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
       </select>
     </div>
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       countries: CountriesDataJson,
-      regionSelected: 'world',
+      regionSelected: 'World',
       searchCountry: '',
       isLoading: false
     }
@@ -74,7 +74,7 @@ export default {
       return regionsList
     },
     filteredList() {
-      if (this.regionSelected === 'world') {
+      if (this.regionSelected === 'World') {
         return this.countries.filter((country) => {
           return country.name.common.toLowerCase().includes(this.searchCountry.toLowerCase())
         })

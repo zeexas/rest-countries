@@ -1,29 +1,30 @@
 <template>
-  <section class="bg-teal-000 w-full">
+  <section class="w-full">
     <header
-      class="flex justify-between items-center h-14 px-8 border-b border-slate-700 dark:border-slate-500 text-lg"
+      class="flex justify-between items-center h-14 px-2 sm:px-8 border-b border-slate-700 dark:border-slate-500 text-sm sm:text-lg"
     >
-      <p class="font-semibold">The Country Quiz</p>
-      <div class="flex gap-10">
+      <p class="lg:font-semibold">The {{ region }} Quiz</p>
+      <div class="flex gap-4 items-center">
         <!-- <div>{{ score }}</div> -->
         <!-- <div>timer</div> -->
         <p>{{ currentQuestion + 1 }} <span class="text-sm">of</span> {{ countryQuizSet.length }}</p>
+        <button @click="exitQuiz" class="px-2">exit</button>
       </div>
     </header>
 
-    <div v-show="!seeResults" class="w-[70%] mx-auto mt-8">
-      <div class="flex flex-col px-8 items-center">
-        <div class="w-full flex justify-between items-center">
+    <div v-show="!seeResults" class="w-full sm:w-[85%] md:w-[70%] mx-auto mt-8 sm:mt-10 md:mt-12 lg:mt-14">
+      <div class="flex flex-col px-4 sm:px-8 items-center">
+        <!-- <div class="w-full flex justify-between items-center">
           <h2 class="text-lg">Guess the Country</h2>
           <button @click="exitQuiz" class="text-lg px-2">exit</button>
-        </div>
-        <img :src="countryQuizSet[currentQuestion].flag" alt="" class="w-full mt-6 shadow-lg" />
-        <div class="grid grid-cols-2 gap-3 w-full mt-6" :key="currentQuestion">
+        </div> -->
+        <img :src="countryQuizSet[currentQuestion].flag" alt="" class="w-full shadow-lg" />
+        <div class="grid grid-cols-2 gap-2 md:gap-3 w-full mt-4 md:mt-6 text-sm md:text-base" :key="currentQuestion">
           <button
             v-for="country in variantsSet"
             :key="country.name"
             :value="country.name"
-            class="text-center p-2 rounded-md border-[2px] border-slate-400 dark:hover:bg-slate-600 hover:bg-slate-300 disabled:pointer-events-none"
+            class="btn-effect text-center p-2 rounded-md border-[1px] md:border-[2px] border-slate-400 dark:border-slate-600 dark:hover:bg-slate-600 hover:bg-slate-300 disabled:pointer-events-none"
             @click="checkAnswer"
             :disabled="disableAnswer"
             :ref="country.name"
@@ -33,7 +34,7 @@
         </div>
         <button
           @click="next"
-          class="text-xl mt-6 w-full bg-slate-500 text-white dark:bg-slate-600 p-2 active:translate-y-0.5 disabled:translate-y-0 disabled:opacity-30"
+          class="text-lg md:text-xl mt-6 w-full bg-slate-500 text-white dark:bg-slate-600 p-2 active:translate-y-0.5 disabled:translate-y-0 disabled:opacity-30"
           :disabled="disableNext"
         >
           {{ lastQuestion ? 'See Results' : 'Next' }}
@@ -56,14 +57,14 @@ import { countryList } from '../data/index'
 import TheResult from './TheResult.vue'
 
 export default {
-  inject: ['regionOrder', 'questionQty'],
+  inject: ['quizRegion', 'questionQty'],
   components: {
     TheResult
   },
   data() {
     return {
       countriesLocal: countryList,
-      region: this.regionOrder,
+      region: this.quizRegion,
       quantity: this.questionQty,
       currentQuestion: 0,
       disableAnswer: false,
@@ -75,7 +76,7 @@ export default {
   },
   computed: {
     regionSetInitial() {
-      return this.region !== 'world'
+      return this.region !== 'World'
         ? this.shuffle(this.countriesLocal.filter((c) => c.region === this.region))
         : this.shuffle(this.countriesLocal)
     },
@@ -90,7 +91,6 @@ export default {
       const currentCountry = this.countryQuizSet[this.currentQuestion]
       const answer = this.regionSet.filter((c) => c.name !== currentCountry.name).slice(0, 3)
       answer.push(currentCountry)
-
       return this.shuffle(answer)
     }
   },
@@ -142,5 +142,31 @@ export default {
 }
 .wrong {
   border-color: red;
+
+}
+.btn-effect {
+  position: relative;
+}
+.btn-effect::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 6px;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  box-shadow: 0 0 20px 30px white;
+}
+.btn-effect:active:after {
+  box-shadow: 0 0 0 0 white;
+  position: absolute;
+  border-radius: 6px;
+  left: 0;
+  top:0;
+  opacity: 1;
+  transition: 0s;
 }
 </style>
