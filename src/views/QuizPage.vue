@@ -95,7 +95,7 @@ export default {
       if (this.questionQty < 30) this.questionQty += 5
     },
     minus() {
-      if (this.questionQty > 5) this.questionQty -= 5
+      if (this.questionQty > 10) this.questionQty -= 5
     }
   }
 }
