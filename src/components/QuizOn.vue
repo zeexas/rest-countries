@@ -1,7 +1,7 @@
 <template>
   <section class="w-full">
     <header
-      class="flex justify-between items-center h-14 px-2 sm:px-8 border-b border-slate-700 dark:border-slate-500 text-sm sm:text-lg"
+      class="flex justify-between items-center h-10 sm:h-14 px-2 sm:px-8 border-b border-slate-700 dark:border-slate-500 text-sm sm:text-lg"
     >
       <p class="lg:font-semibold">The {{ region }} Quiz</p>
       <div class="flex gap-4 items-center">
@@ -12,7 +12,7 @@
       </div>
     </header>
 
-    <div v-show="!seeResults" class="w-full sm:w-[85%] md:w-[70%] mx-auto mt-8 sm:mt-10 md:mt-12 lg:mt-14">
+    <div v-show="!seeResults" class="w-full sm:w-[85%] md:w-[70%] mx-auto mt-6 sm:mt-10 md:mt-12">
       <div class="flex flex-col px-4 sm:px-8 items-center">
         <!-- <div class="w-full flex justify-between items-center">
           <h2 class="text-lg">Guess the Country</h2>
