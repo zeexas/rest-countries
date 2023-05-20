@@ -13,7 +13,7 @@
         <div class="progress-value text-3xl sm:text-5xl font-semibold">
           {{ score }}/{{ questionsQty }}
         </div>
-        <!-- <div class="relative text-xl">{{ (score / questionsQty) * 100 }}%</div> -->
+        <div class="relative text-xl mt-4">{{ progressStartValue }}%</div>
       </div>
 
       <button
@@ -32,10 +32,34 @@ export default {
     score: Number,
     questionsQty: Number
   },
+  data() {
+    return {
+      progressStartValue: 0,
+      progressEndValue: this.score / this.questionsQty * 100,
+      speed: 50,
+      interval: null
+    }
+  },
   methods: {
     exitQuiz() {
       this.$emit('exitQuiz')
+    },
+    runProgress() {
+      this.interval = setInterval(() => {
+        this.progressStartValue++
+
+        this.$refs.progress.style.background = `conic-gradient(#0d9488 ${
+          this.progressStartValue * 3.6
+        }deg, #cbd5e1 0deg)`
+
+        if (this.progressStartValue === this.progressEndValue) {
+          clearInterval(this.interval)
+        }
+      }, this.speed)
     }
+  },
+  mounted() {
+    this.runProgress()
   }
 }
 </script>
