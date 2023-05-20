@@ -12,15 +12,29 @@
           <input type="radio" name="quiz" id="flag" value="flag" v-model="quizmode" />
           <label for="flag" class="quizModeItem">Flags</label>
         </div> -->
-        <div class="mt-8 sm:mt-12 text-sm sm:text-lg flex flex-row justify-between items-center">
+        <div class="mt-8 sm:mt-10 text-sm sm:text-lg flex flex-row justify-between items-center">
           <p>Number of questions</p>
           <div class="flex gap-2 sm:gap-3 justify-center items-center">
-            <button @click="minus" :class="mathStyle">-</button>
+            <button @click="minusQ" :class="mathStyle">-</button>
             <div>{{ questionQty }}</div>
-            <button @click="plus" :class="mathStyle">+</button>
+            <button @click="plusQ" :class="mathStyle">+</button>
           </div>
         </div>
-        <div class="flex gap-20 items-center mt-6">
+
+        <div class="mt-5 text-sm sm:text-lg flex flex-row justify-between items-center">
+          <div class="flex flex-row justify-between items-center">
+            <p>Timer</p>
+            <input type="checkbox" v-model="timerOn" name="timer" id="timer" class="ml-20" />
+            <label for="timer" class="bg-slate-400 dark:bg-slate-600"></label>
+          </div>
+          <div class="flex gap-2 sm:gap-3 justify-center items-center">
+            <button @click="minusTime" :class="mathStyle">-</button>
+            <div>{{ timer }}</div>
+            <button @click="plusTime" :class="mathStyle">+</button>
+          </div>
+        </div>
+        
+        <div class="flex gap-20 items-center mt-8">
           <select
             v-model="regionSelected"
             class="w-full rounded text-sm sm:text-base px-4 py-1 sm:py-2 outline-none block"
@@ -31,10 +45,6 @@
             <option value="World" selected>World</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
-          <!-- <div class="flex gap-6 text-xl">
-            <label for="timer">timer</label>
-            <input type="checkbox" name="timer" id="timer" class="w-4" />
-          </div> -->
         </div>
         <button
           class="bg-slate-500 dark:bg-teal-700 sm:text-xl font-medium w-full text-white p-2 mt-10 sm:mt-16 active:scale-[0.99] transition"
@@ -55,22 +65,25 @@ import { regionsList } from '../data/index'
 
 export default {
   components: {
-    QuizOn,
-},
+    QuizOn
+  },
   data() {
     return {
       quizOn: false,
       quizmode: 'country',
       regionSelected: 'World',
       questionQty: 10,
+      timer: 15,
+      timerOn: null,
       mathStyle:
-        'w-5 sm:w-6 h-5 sm:h-6 rounded-full text-lg sm:text-xl flex items-center justify-center border border-slate-500 dark:border-slate-600 text-slate-600 dark:text-slate-400 active:translate-y-px'
+        'w-5 sm:w-6 h-5 sm:h-6 rounded-full text-lg sm:text-xl flex items-center justify-center border border-slate-500 dark:border-slate-600 text-slate-600 dark:text-slate-400 active:translate-y-px',
     }
   },
   provide() {
     return {
       quizRegion: computed(() => this.regionSelected),
-      questionQty: computed(() => this.questionQty)
+      questionQty: computed(() => this.questionQty),
+      timerOn: computed(() => this.timerOn),  // boolean true/false
     }
   },
   computed: {
@@ -91,12 +104,18 @@ export default {
     endQuiz() {
       this.quizOn = false
     },
-    plus() {
+    plusQ() {
       if (this.questionQty < 30) this.questionQty += 5
     },
-    minus() {
+    minusQ() {
       if (this.questionQty > 10) this.questionQty -= 5
-    }
+    },
+    plusTime() {
+      if (this.timer < 30) this.timer += 5
+    },
+    minusTime() {
+      if (this.timer > 10) this.timer -= 5
+    },
   }
 }
 </script>
@@ -120,4 +139,44 @@ input[type='radio']:checked + label {
   background-color: darkcyan;
 }
 
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	width: 2.3rem;
+	height: 1.2rem;
+	display: block;
+	border-radius: 1rem;
+	position: relative;
+  transition: all 0.3s ease;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 1rem;
+	height: 1rem;
+	background: #fff;
+	border-radius: 1rem;
+	transition: 0.3s;
+}
+
+input:checked + label {
+	background: #0f766e;
+}
+
+input:checked + label:after {
+	left: calc(100% - 2px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 1.5rem;
+}
 </style>
