@@ -10,7 +10,7 @@
             class="circular-progress relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex flex-col justify-center items-center before:bg-[#e2e8f0] dark:before:bg-[#202c37]"
             ref="timer"
           >
-            <div class="relative text-sm">
+            <div class="relative text-xs sm:text-sm">
               {{ Math.round(timerStartValue / (360 / this.timerValue)) }}
             </div>
           </div>
@@ -213,7 +213,7 @@ export default {
   transition: 0s;
 }
 .timeup:after {
-  content: "Time's up";
+  content: "Time's Up";
   font-size: 12px;
   font-weight: 600;
   color: white;
