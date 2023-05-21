@@ -1,25 +1,43 @@
 <template>
   <section class="w-full">
     <header
-      class="flex justify-between items-center h-10 sm:h-14 px-2 sm:px-8 border-b border-slate-700 dark:border-slate-500 text-sm sm:text-lg"
+      class="flex justify-between items-center h-10 sm:h-14 px-0 sm:px-8 border-b border-slate-700 dark:border-slate-500 text-sm sm:text-lg"
     >
       <p class="lg:font-semibold">The {{ region }} Quiz</p>
-      <div v-show="timerOn">timer</div>
-      <div class="flex gap-4 items-center">
-        <p>{{ currentQuestion + 1 }} <span class="text-sm">of</span> {{ countryQuizSet.length }}</p>
+      <div class="flex gap-2 sm:gap-4 items-center">
+        <div v-if="timerOn" v-show="!seeResults">
+          <div
+            class="circular-progress relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex flex-col justify-center items-center before:bg-[#e2e8f0] dark:before:bg-[#202c37]"
+            ref="timer"
+          >
+            <div class="relative text-sm">
+              {{ Math.round(timerStartValue / (360 / this.timerValue)) }}
+            </div>
+          </div>
+        </div>
+        <p class="ml-4 sm:ml-10">
+          {{ currentQuestion + 1 }} <span class="text-sm">of</span> {{ countryQuizSet.length }}
+        </p>
         <button @click="exitQuiz" class="px-2">exit</button>
       </div>
     </header>
 
     <transition name="switch" mode="out-in">
-      <div v-if="!seeResults" key="question" class="w-full sm:w-[85%] md:w-[70%] mx-auto mt-6 sm:mt-10 md:mt-12">
+      <div
+        v-if="!seeResults"
+        key="question"
+        class="w-full sm:w-[85%] md:w-[70%] mx-auto mt-6 sm:mt-10 md:mt-12"
+      >
         <div class="flex flex-col px-4 sm:px-8 items-center">
           <!-- <div class="w-full flex justify-between items-center">
             <h2 class="text-lg">Guess the Country</h2>
             <button @click="exitQuiz" class="text-lg px-2">exit</button>
           </div> -->
           <img :src="countryQuizSet[currentQuestion].flag" alt="" class="w-full shadow-lg" />
-          <div class="grid grid-cols-2 gap-2 md:gap-3 w-full mt-4 md:mt-6 text-sm md:text-base" :key="currentQuestion">
+          <div
+            class="grid grid-cols-2 gap-2 md:gap-3 w-full mt-4 md:mt-6 text-sm md:text-base"
+            :key="currentQuestion"
+          >
             <button
               v-for="country in variantsSet"
               :key="country.name"
@@ -41,13 +59,12 @@
           </button>
         </div>
       </div>
-  
+
       <the-result
         v-else
         key="result"
         :score="score"
         :questionsQty="countryQuizSet.length"
-        @exitQuiz="exitQuiz"
         ref="result"
       ></the-result>
     </transition>
@@ -59,7 +76,7 @@ import { countryList } from '../data/index'
 import TheResult from './TheResult.vue'
 
 export default {
-  inject: ['quizRegion', 'questionQty', 'timerOn'],
+  inject: ['quizRegion', 'questionQty', 'timerOn', 'timerValue'],
   components: {
     TheResult
   },
@@ -73,7 +90,10 @@ export default {
       disableNext: true,
       score: 0,
       lastQuestion: false,
-      seeResults: false
+      seeResults: false,
+      timerStartValue: 360,
+      timerEndValue: 0,
+      interval: null
     }
   },
   computed: {
@@ -98,7 +118,7 @@ export default {
   },
   methods: {
     exitQuiz() {
-      this.$emit('exitQuiz')
+      this.$store.commit('setQuizOn', false)
     },
     countrySet() {
       console.log(this.flagSet)
@@ -107,6 +127,7 @@ export default {
       return [...arr].sort(() => Math.random() - 0.5)
     },
     checkAnswer(e) {
+      clearInterval(this.interval)
       const answer = e.target.value
       this.disableAnswer = true
       this.disableNext = false
@@ -119,9 +140,6 @@ export default {
     },
     getResult() {
       this.seeResults = true
-      // this.$refs.result.$refs.progress.style.background = `conic-gradient(#0d9488 ${
-      //   (this.score / this.countryQuizSet.length) * 100 * 3.6
-      // }deg, #cbd5e1 0deg)`
     },
     next() {
       this.lastQuestion === false ? this.currentQuestion++ : this.getResult()
@@ -130,11 +148,35 @@ export default {
         : (this.lastQuestion = false)
       this.disableAnswer = false
       this.disableNext = true
+      this.timerStartValue = 360
+      if (this.timerOn) this.runTimer()
+      if (this.$refs.timer) this.$refs.timer.classList.remove('timeup')
+    },
+    runTimer() {
+      const timerEl = this.$refs.timer
+      this.interval = setInterval(() => {
+        this.timerStartValue--
+
+        if (timerEl)
+          timerEl.style.background = `conic-gradient(#0d9488 ${this.timerStartValue}deg, #cbd5e1 0deg)`
+
+        if (this.timerStartValue === this.timerEndValue) {
+          clearInterval(this.interval)
+          this.disableAnswer = true
+          this.disableNext = false
+          if (timerEl) {
+            timerEl.style.background = `conic-gradient(#DC143C 360deg, #cbd5e1 0deg)`
+            timerEl.classList.add('timeup')
+          }
+        }
+      }, 1000 / (360 / this.timerValue))
+      // }, 360 / 120 * this.timerValue)
+      //  10 sec =
     }
   },
-  // mounted() {
-  //   this.quizSet = this.countryQuizSet
-  // }
+  mounted() {
+    if (this.timerOn) this.runTimer()
+  }
 }
 </script>
 
@@ -144,18 +186,17 @@ export default {
 }
 .wrong {
   border-color: red;
-
 }
 .btn-effect {
   position: relative;
 }
 .btn-effect::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   border-radius: 6px;
   left: 0;
-  top:0;
+  top: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -167,8 +208,37 @@ export default {
   position: absolute;
   border-radius: 6px;
   left: 0;
-  top:0;
+  top: 0;
   opacity: 1;
   transition: 0s;
+}
+.timeup:after {
+  content: "Time's up";
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  display: block;
+  position: absolute;
+  border-radius: 12px;
+  padding: 0 10px;
+  background-color: #dc143c;
+  left: -75px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 75px;
+  /* height: 100%; */
+}
+@media (max-width: 480px) {
+  .timeup:after {
+    left: -70%;
+    top: 100%;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    transform: translateY(0%);
+  }
 }
 </style>

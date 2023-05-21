@@ -33,7 +33,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap');
 body {
   --base-font: hsl(200, 15%, 8%);
-  --base-bg: hsl(207, 26%, 17%);
+  --base-bg: #202c37;
   --bg-el-dark: hsl(209, 23%, 22%);
   --bg-el-light: #f1f5f9;
   --bg-light: #e2e8f0;

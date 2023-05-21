@@ -29,7 +29,7 @@
           </div>
           <div class="flex gap-2 sm:gap-3 justify-center items-center">
             <button @click="minusTime" :class="mathStyle">-</button>
-            <div>{{ timer }}</div>
+            <div>{{ timerValue }}</div>
             <button @click="plusTime" :class="mathStyle">+</button>
           </div>
         </div>
@@ -53,7 +53,7 @@
           Start Quiz
         </button>
       </div>
-      <quiz-on v-else @exitQuiz="endQuiz"></quiz-on>
+      <quiz-on v-else></quiz-on>
     </transition>
   </section>
 </template>
@@ -69,12 +69,13 @@ export default {
   },
   data() {
     return {
-      quizOn: false,
+      // quizOn: false,
       quizmode: 'country',
       regionSelected: 'World',
       questionQty: 10,
-      timer: 15,
-      timerOn: null,
+      timerValue: 15,
+      timerOn: false,
+      timerShow: false,
       mathStyle:
         'w-5 sm:w-6 h-5 sm:h-6 rounded-full text-lg sm:text-xl flex items-center justify-center border border-slate-500 dark:border-slate-600 text-slate-600 dark:text-slate-400 active:translate-y-px',
     }
@@ -84,6 +85,7 @@ export default {
       quizRegion: computed(() => this.regionSelected),
       questionQty: computed(() => this.questionQty),
       timerOn: computed(() => this.timerOn),  // boolean true/false
+      timerValue: computed(() => this.timerValue),
     }
   },
   computed: {
@@ -93,17 +95,20 @@ export default {
     applyTheme() {
       return this.theme === 'dark' ? 'dark-el' : 'light-el'
     },
+    quizOn() {
+      return this.$store.getters.getQuizOn
+    },
     regions() {
       return regionsList
     }
   },
   methods: {
     startQuiz() {
-      this.quizOn = true
+      this.$store.commit('setQuizOn', true)
     },
-    endQuiz() {
-      this.quizOn = false
-    },
+    // endQuiz() {
+    //   this.quizOn = false
+    // },
     plusQ() {
       if (this.questionQty < 30) this.questionQty += 5
     },
@@ -111,10 +116,10 @@ export default {
       if (this.questionQty > 10) this.questionQty -= 5
     },
     plusTime() {
-      if (this.timer < 30) this.timer += 5
+      if (this.timerValue < 30) this.timerValue += 5
     },
     minusTime() {
-      if (this.timer > 10) this.timer -= 5
+      if (this.timerValue > 10) this.timerValue -= 5
     },
   }
 }

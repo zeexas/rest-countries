@@ -17,7 +17,7 @@
       </div>
 
       <button
-        @click="exitQuiz"
+        @click="playAgain"
         class="w-fit border sm:border-2 border-[#0d9488] text-sm sm:text-base px-8 sm:px-12 py-2 sm:py-3 rounded sm:rounded-md active:translate-y-0.5"
       >
         Play again
@@ -36,13 +36,13 @@ export default {
     return {
       progressStartValue: 0,
       progressEndValue: this.score / this.questionsQty * 100,
-      speed: 50,
+      speed: 20,
       interval: null
     }
   },
   methods: {
-    exitQuiz() {
-      this.$emit('exitQuiz')
+    playAgain() {
+      this.$store.commit('setQuizOn', false)
     },
     runProgress() {
       this.interval = setInterval(() => {
@@ -64,16 +64,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .circular-progress {
   position: relative;
-  background: conic-gradient(#0d9488 0deg, lightcyan 0deg);
 }
 .circular-progress::before {
   content: '';
   position: absolute;
-  height: 90%;
-  width: 90%;
+  height: 85%;
+  width: 85%;
   border-radius: 50%;
 }
 .progress-value {
