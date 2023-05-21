@@ -2,18 +2,18 @@
   <section>
     <div class="flex flex-wrap justify-between gap-2">
       <div class="relative min-w-[180px] sm:w-1/4 sm:min-w-[280px]">
-        <div class="absolute left-4 top-[50%] -translate-y-1/2"><search-svg /></div>
+        <div class="absolute left-3 sm:left-4 top-[50%] -translate-y-1/2"><search-svg /></div>
         <input
           type="search"
           v-model="searchCountry"
-          class="w-full rounded pl-14 pr-4 py-1 sm:py-2 outline-none"
+          class="w-full rounded pl-12 text-sm sm:text-base sm:pl-14 pr-4 py-1 sm:py-2 outline-none"
           :class="applyTheme"
           placeholder="Search for a country..."
         />
       </div>
       <select
         v-model="regionSelected"
-        class="rounded px-4 py-1 sm:py-2 outline-none block"
+        class="rounded px-4 py-1 text-sm sm:text-base sm:py-2 outline-none block"
         :class="applyTheme"
         name="selectRegion"
         id="selectRegion"
@@ -27,7 +27,7 @@
     <!-- <p v-else-if="!isLoading && error">{{ error }}</p> -->
     <transition-group
       v-else
-      class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 sm:gap-12 lg:gap-14 2xl:gap-16 mt-8"
+      class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-8 md:gap-12 lg:gap-14 2xl:gap-16 mt-8"
       tag="ul"
       name="list"
       appear
