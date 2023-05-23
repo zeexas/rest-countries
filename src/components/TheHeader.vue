@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between items-center p-4 sm:p-6 sm:px-12 lg:px-16 shadow-md fixed top-0 left-0 right-0 z-50 font-semibold"
+    class="flex justify-between items-center p-4 sm:p-6 lg:p-7 sm:px-12 lg:px-16 shadow-md fixed top-0 left-0 right-0 z-50 font-semibold"
     :class="theme === 'dark' ? 'dark-el' : 'light-el'"
   >
     <h2 class="text-sm sm:text-xl lg:text-2xl">Where in the world?</h2>
